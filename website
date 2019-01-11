@@ -1,1 +1,51 @@
+const canvas = document.createElement("canvas");
+const ctx = canvas.getContext("2d");
+document.body.appendChild(canvas);
+
+function resizeCanvas() {
+  //fit canvas to window and fix issues with canvas blur on zoom
+  canvas.style.width = window.innerWidth + "px";
+  canvas.style.height = window.innerHeight + "px";
+  const scale = window.devicePixelRatio; // Change to 1 on retina screens to see blurry canvas.
+  canvas.width = window.innerWidth * scale;
+  canvas.height = window.innerHeight * scale;
+  ctx.scale(scale, scale);
+
+}
+resizeCanvas();
+window.addEventListener("resize", resizeCanvas);
+
+
+// RANDOM COLOR GENATOR
+function randomColor() {
+  var letters = '0123456789ABCDEF';
+  var color = '#';
+  for (var i = 0; i < 6; i++) {
+    color += letters[Math.floor(Math.random() * 16)];
+  }
+  return color;
+}
+
+
+
+// ANIMATION LOOP FOR CRAZY COLOR HUDSONS
+function cycle(){
+X = Math.floor(Math.random() * canvas.width);
+Y = Math.floor(Math.random() * canvas.height);
+ctx.font = "50px Georgia";
+ctx.fillStyle = randomColor();
+ctx.fillText("Hudson is the coolest", X, Y)
+
+  requestAnimationFrame(cycle);
+}
+requestAnimationFrame(cycle);
+
+//BIG HUDSON IN THE BACK AND CLEARING
+setInterval(function() {
+ctx.clearRect(0, 0, canvas.width, canvas.height);
+ctx.font = "250px Georgia";
+ctx.fillStyle = "white";
+ctx.fillText("Hudson H", 30, canvas.height/2)
+}, 4000);
+
 
